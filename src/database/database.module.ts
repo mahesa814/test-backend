@@ -1,22 +1,22 @@
+import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Makes it accessible throughout the app
+      isGlobal: true, // Makes the configuration available globally
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
+      username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Path to entities
-      synchronize: false, // Disable auto-sync in production, use migrations instead
+      database: process.env.DB_DATABASE,
+      autoLoadEntities: true,
+      synchronize: true, // Should be false in production
     }),
   ],
 })
-export class AppModule {}
+export class DatabaseModule {}

@@ -1,9 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Reservations } from './reservation.entity';
 
 @Entity()
 export class Customers {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
@@ -13,4 +21,13 @@ export class Customers {
 
   @Column()
   phone_number: string;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at: Date;
+
+  @OneToMany(() => Reservations, (reservation) => reservation.customer)
+  reservations: Reservations[];
 }

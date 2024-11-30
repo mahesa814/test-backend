@@ -11,6 +11,6 @@ export class ResponseMetaSwagger {
   message: string;
 }
 export class ResponseDataSwagger<T> {
-  @ApiProperty({ type: 'object', example: {} })
+  @ApiProperty({ type: 'object', example: {}, additionalProperties: true })
   data: T;
 }
